@@ -1,0 +1,74 @@
+import java.util.Scanner;
+
+public class BookingSystem
+{
+    private static final int MAX_APPOINTMENTS = 3;
+    private Appointment[] appointments;
+
+    public BookingSystem (){
+        appointments = new Appointment[MAX_APPOINTMENTS];
+    }
+
+    public void bookAppointment(){
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < MAX_APPOINTMENTS; i++) {
+            System.out.println("Enter details for Appointment " + (i + 1) + ":");
+            System.out.print("Patient Name: ");
+            String patientName = scanner.nextLine();
+            System.out.print("Appointment Date: ");
+            String apptDate = scanner.nextLine();
+            System.out.print("Appointment Time: ");
+            String apptTime = scanner.nextLine();
+            System.out.print("Dentist Name: ");
+            String dentistName = scanner.nextLine();
+            appointments[i] = new Appointment(patientName, apptDate, apptTime, dentistName);
+        }
+    }
+
+    public void displayAllAppointments() {
+        System.out.println("All Appointments:");
+        for (int i = 0; i < MAX_APPOINTMENTS; i++) {
+            System.out.println(appointments[i]);
+        }
+    }
+
+    public void searchAppointmentsByDate(String date) {
+        System.out.println("Appointments for date " + date + ":");
+        for (int i = 0; i < MAX_APPOINTMENTS; i++) {
+            if (appointments[i].getapptDate().equals(date)) {
+                System.out.println(appointments[i]);
+            }
+        }
+    }
+
+    public void cancelAppointment(int index) {
+        if (index >= 0 && index < MAX_APPOINTMENTS) {
+            appointments[index] = null;
+            System.out.println("Appointment at index " + index + " canceled successfully.");
+        } else {
+            System.out.println("Invalid index.");
+        }
+    }
+
+    public static void main(String[] args) {
+        BookingSystem bookingSystem = new BookingSystem();
+        bookingSystem.bookAppointment();
+        bookingSystem.displayAllAppointments();
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter date to search for appointments: ");
+        String searchDate = scanner.nextLine();
+        bookingSystem.searchAppointmentsByDate(searchDate);
+
+        System.out.print("Enter index of appointment to cancel: ");
+        int cancelIndex = scanner.nextInt();
+        bookingSystem.cancelAppointment(cancelIndex);
+
+        System.out.println("Updated Appointments:");
+        bookingSystem.displayAllAppointments();
+    }
+}
+
+
+
+       
